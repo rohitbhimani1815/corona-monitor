@@ -1,0 +1,51 @@
+{% extends "corona/basic.html" %}
+{% block style %}
+{% endblock style %}
+{% block body %}
+<div class="container card my-2" style="width: 23rem;">
+  <img src="https://www.countryflags.io/{{summary.Code}}/flat/64.png" style="padding:10px;"class="card-img-top" alt="{{summary.Country_Region}}">
+  <div class="card-body">
+    <h5 class="card-title">{{summary.Country_Region}}</h5>
+    <p class="card-text" style="margin-bottom:5px;margin-top:5px ">Confirmed / Today : {{summary.Confirmed}} / {{summary.NewConfirmed}}</p>
+    <p class="card-text" style="margin-bottom:5px;margin-top:5px ">Deaths / Today : {{summary.Deaths}} / {{summary.NewDeaths}}</p>
+    <p class="card-text" style="margin-bottom:5px;margin-top:5px ">Recovered / Today : {{summary.Recovered}} / {{summary.NewRecovered}}</p>
+    <p class="card-text" style="margin-bottom:5px;margin-top:5px ">Active : {{summary.Active}}</p>
+    <a href="/country/{{summary.Country_Region}}/{{summary.Code}}" class="btn btn-primary">Show News</a>
+  </div>
+</div>
+{% if state %}
+
+<div class="container">
+<table class="table table-striped table-hover" style="text-align: center;">
+          <thead>
+              <tr>
+                  <th colspan="6">{{summary.Last_Update|slice:":19"}}</th>
+              </tr>
+              <tr>
+                  <th>Number</th>
+                  <th>State</th>
+                  <th>Confirmed / Today</th>
+                  <th>Deaths / Today</th>
+                  <th>Recovered / Today</th>
+                  <th>Active</th>
+              </tr>
+          </thead>
+          <tbody>
+          {% comment %} {% csrf_token %} {% endcomment %}
+          {% for i in state|dictsortreversed:"Active"%}
+              <tr>
+                <td>{{forloop.counter	}}</td>
+                <td>{{i.Province_State}}</td> 
+                <td>{{i.Confirmed}} / {{i.NewConfirmed}}</td>
+                <td>{{i.Deaths}} / {{i.NewDeaths}} </td>
+                <td>{{i.Recovered}} / {{i.NewRecovered}}</td>
+                <td>{{i.Active}}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+</div>
+{% else %}
+<p align="center" style="margin-top:50px">sorry we couldn't find State Information<p>
+{% endif %}
+{% endblock body %}

@@ -1,0 +1,14 @@
+{% extends "corona/basic.html" %}
+{% block style %}
+.center {
+    display: flex;
+    justify-content: center;
+}
+{% endblock style %}
+{% block body %}
+{% if search %}
+<div class="container center">
+<p>Search is Not Found<p>
+</div>
+{% endif %}
+{% endblock body %}
